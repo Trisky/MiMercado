@@ -16,3 +16,14 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 **TODO**
 
 . Una vista como la gente. 
+
+**HOW TO**
+
+1. Creamos una app como developer de meli: http://applications.mercadolibre.com/
+2. Obtenemos el app id y secret key
+3. vamos a https://api.mercadolibre.com/sites/MLA/search?nickname=TU_NICKNAME_DE_MELI para obtener tu user id.
+4. Ponemos appId, secret key y user id en el archivo .env
+5. Configurar Redis.
+
+
+
