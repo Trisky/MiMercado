@@ -19,6 +19,7 @@ class Product {
     private $id;
     private $description;
     private $price;
+    private $response;
 
     /**
      * @return mixed
@@ -71,6 +72,7 @@ class Product {
     }
 
     function __construct($id,$res,$description) {
+        $this->response = $res;
         $this->id = $id;
         $this->title = $res->title;
         $this->price = $res->price;
@@ -81,6 +83,31 @@ class Product {
             $this->addPicture($picture->url);
         }
     }
+
+    /**
+     * para saber ya se vendieron todas las unidades.
+     */
+    public function isSoldOut(){
+        return $this->response->available_quantity ==0;
+    }
+
+    /**
+     * Para saber si esta publicada
+     * closed: no
+     * active: si
+     */
+    public function getStatus(){
+        return $this->response->status;
+    }
+
+    public function isProductEnabled(){
+        return $this->getStatus() == 'active';
+    }
+
+    public function getResponse(){
+        return $this->response;
+    }
+
     private function addPicture($picture){
         $this->pictures[] = $picture;
     }

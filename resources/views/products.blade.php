@@ -8,6 +8,7 @@
             <p> precio: {{$p->getPrice()}}</p>
             <p> descripcion: {{$p->getDescription()}}</p>
             <p> estado: {{$p->getCondition()}}</p>
+            <p> en venta?: {{$p->isProductEnabled()? 'si':'no'}}</p>
             <p> link: {{$p->getPermaLink()}}</p>
             @foreach($p->getPictures() as $i => $picture)
                 <p>img{{$i}}: {{$picture}}</p>

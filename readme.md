@@ -7,9 +7,10 @@ En la actualidad no existe una forma de ofrecer un listado de todos tus producto
 https://developers.mercadolibre.com/en_us/search-products-seller
 
 
+**Features**
+. Cache con redis para que Meli no te banee la app.
+. Listado de productos, incluso si estan pausados.
 
 **TODO**
 
-. Pantalla de login para obtener credenciales y no tener que tenerlas hardcodeadas en el modelo.
-
-. Cache
+. Una vista como la gente. 
