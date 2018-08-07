@@ -8,7 +8,9 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 
 
 **Features**
+
 . Cache con redis para que Meli no te banee la app.
+
 . Listado de productos, incluso si estan pausados.
 
 **TODO**
