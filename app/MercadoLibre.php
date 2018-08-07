@@ -9,7 +9,7 @@
 namespace App;
 
 
-class MercadoLibre //extends \Meli
+class MercadoLibre extends \Meli
 {
     private $username;
 
@@ -19,7 +19,7 @@ class MercadoLibre //extends \Meli
         $userId = env('MELI_USERID');
         $token = env('MELI_ACCESSTOKEN');
         $secret = env('MELI_SECRET');
-        //parent::__construct($userId, $secret, $token, null);
+//        parent::__construct($userId, $secret, $token, null);
     }
 
     function getPublicProducts(){
