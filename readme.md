@@ -24,6 +24,7 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 3. vamos a https://api.mercadolibre.com/sites/MLA/search?nickname=TU_NICKNAME_DE_MELI para obtener tu user id.
 4. Ponemos appId, secret key y user id en el archivo .env
 5. Configurar Redis.
+6. Vamos a https://developers.mercadolibre.com/en_us/authentication-and-authorization#token ,para permitirle a la app acceder a nuestros datos
 
 
 
