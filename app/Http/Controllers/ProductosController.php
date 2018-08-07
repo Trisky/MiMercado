@@ -16,6 +16,9 @@ class ProductosController extends Controller
     public function __invoke(Request $request)
     {
         $meli = new MercadoLibre();
-        $products = $meli->getPublicProducts();
-        return view('productos', ['productos' =>$products]);
-    }}
+        //$products = $meli->getPublicProducts();
+        $products = $meli->fetchPrivateProducts();
+        return view('products', ['products' =>$products]);
+    }
+
+}
