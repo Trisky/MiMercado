@@ -7,12 +7,13 @@
  */
 
 namespace App;
+use Illuminate\Support\Facades\Redis;
+
 
 
 class MercadoLibre
 {
-    CONST API_GET_DESCRIPTION = 'https://api.mercadolibre.com/items/';
-    CONST API_GET_DESCRIPTION2 = '/description';
+    CONST CACHE_KEY = 'products';
 
     private $username;
     private $access_token;
@@ -34,18 +35,25 @@ class MercadoLibre
         return $products;
     }
 
+
+
+    public function clearCache(){
+        Redis::del(self::CACHE_KEY);
+    }
+
     /**
      * Devuelve los productos del usuario. forEach de queries, bastante lenteja.
      * @return array
      */
-    function fetchPrivateProducts(){
-        $response = $this->getBody("https://api.mercadolibre.com/users/$this->client_id/items/search",true);
-        $articleIds = $response->results;
+    public function getUserProducts(){
         $products = [];
-        foreach ($articleIds as $id){
-            $response = $this->getBody("https://api.mercadolibre.com/items/$id");
-            $description = $this->fetchItemDescription($id);
-            $products[] =new Product($id,$response,$description);
+        if(!($responses = json_decode(Redis::get(self::CACHE_KEY)))){
+            $responses = $this->fetchPrivateProducts($responses);
+            Redis::setex(self::CACHE_KEY, 60 * 60 * 24, json_encode($responses));
+        }
+
+        foreach ($responses as $response){
+            $products[] =new Product(1,$response,$response->description);
         }
         return $products;
     }
@@ -62,9 +70,22 @@ class MercadoLibre
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET', $url);
         $response = json_decode($response->getBody());
-//        if(is_null($response['body'])){
-//            throw new \Exception('Error on meli api call, body null');
-//        }
         return $response;
+    }
+
+    /**
+     * @param $responses
+     * @return array
+     */
+    public function fetchPrivateProducts($responses) {
+        $response1 = $this->getBody("https://api.mercadolibre.com/users/$this->client_id/items/search", true);
+        $articleIds = $response1->results;
+
+        foreach ($articleIds as $id) {
+            $response = $this->getBody("https://api.mercadolibre.com/items/$id");
+            $response->description = $this->fetchItemDescription($id);
+            $responses[] = $response;
+        }
+        return $responses;
     }
 }
