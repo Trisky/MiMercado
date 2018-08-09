@@ -18,13 +18,14 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 . Una vista como la gente. 
 
 **HOW TO**
+1. Composer install 
+2. Creamos una app como developer de meli: http://applications.mercadolibre.com/
+3. Obtenemos el app id y secret key
+4. Vamos a https://developers.mercadolibre.com/en_us/authentication-and-authorization#token ,para permitirle a la app acceder a nuestros datos
+5. vamos a https://api.mercadolibre.com/sites/MLA/search?nickname=TU_NICKNAME_DE_MELI para obtener tu user id.
+6. Ponemos appId, secret key y user id en el archivo .env
+7. Configurar Redis.
 
-1. Creamos una app como developer de meli: http://applications.mercadolibre.com/
-2. Obtenemos el app id y secret key
-3. vamos a https://api.mercadolibre.com/sites/MLA/search?nickname=TU_NICKNAME_DE_MELI para obtener tu user id.
-4. Ponemos appId, secret key y user id en el archivo .env
-5. Configurar Redis.
-6. Vamos a https://developers.mercadolibre.com/en_us/authentication-and-authorization#token ,para permitirle a la app acceder a nuestros datos
 
 
 
