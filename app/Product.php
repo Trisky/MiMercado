@@ -35,11 +35,19 @@ class Product {
         return $this->description;
     }
 
+    public function getShortDescription(){
+        return substr($this->getDescription(),0,120).'...';
+    }
+
     /**
      * @return mixed
      */
     public function getPictures() {
         return $this->pictures;
+    }
+
+    public function getFirstpicture(){
+        return reset($this->pictures);
     }
 
 
