@@ -7,6 +7,7 @@
  */
 
 namespace App;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Redis;
 
 
@@ -68,7 +69,14 @@ class MercadoLibre
             $url= $url."?access_token=$this->access_token";
         }
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', $url);
+        try{
+            $response = $client->request('GET', $url);
+        }catch(ClientException $e){
+            //throw new \Exception('Error while trying to fetch products',0,$e);
+            $response = $e->getResponse();
+            throw new \Exception('Error while trying to fetch products: '.$response->getReasonPhrase(),$response->getStatusCode(),$e);
+        }
+
         $response = json_decode($response->getBody());
         return $response;
     }
