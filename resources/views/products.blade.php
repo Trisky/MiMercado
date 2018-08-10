@@ -1,4 +1,8 @@
 <html>
+<head>
+    <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
+    <link rel="script" href="{{ URL::asset('js/app.js') }}">
+</head>
 <body>
 <div class="productsContainer">
     @foreach($products as $p)
