@@ -17,6 +17,7 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 
 1. Una vista como la gente. 
 2. Parece que el token que me da meli en el paso 5 vence a las 24h, hay que meter un poco de magia para que eso no joda.
+3. Heroku deploy
 
 **HOW TO**
 Requiere composer y npm instalados en el sistema.
