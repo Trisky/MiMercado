@@ -1,5 +1,7 @@
 #**Mi Mercado**
 
+Demo: https://mimercado.herokuapp.com/
+
 Este proyecto tiene como objetivo la creación de un store individual para un perfil de mercado libre.
 
 En la actualidad no existe una forma de ofrecer un listado de todos tus productos a menos que sea un store verificado, este proyecto plantea la posibilidad de tener tu propio listado de productos utilizando el listado privado de artículos:
@@ -19,6 +21,7 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 2. Parece que el token que me da meli en el paso 5 vence a las 24h, hay que meter un poco de magia para que eso no joda.
 
 **HOW TO**
+
 Requiere composer y npm instalados en el sistema.
 
 1. Composer install
@@ -30,6 +33,13 @@ Requiere composer y npm instalados en el sistema.
 7. Configurar Redis.
 8. npm install
 9. npm run watch (para transpiler de css y js)
+
+
+** Heroku Config **
+1. Crearse un redis en heroku
+2. Entrar en el redis que te creó y copiarse user/password/port/url
+3. meter esos datos junto con los de meli que pusiste en .env usando heroku config:set
+
 
 
 
