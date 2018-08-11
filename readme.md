@@ -36,7 +36,7 @@ Requiere composer y npm instalados en el sistema.
 9. npm run watch (para transpiler de css y js)
 
 
-** Heroku Config **
+**Heroku Config**
 1. Crearse un redis en heroku
 2. Entrar en el redis que te creó y copiarse user/password/port/url
 3. meter esos datos junto con los de meli que pusiste en .env usando heroku config:set
