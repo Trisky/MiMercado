@@ -1,6 +1,6 @@
 #**Mi Mercado**
 
-Demo: https://mimercado.herokuapp.com/
+Demo: http://mimercado.herokuapp.com/
 
 Este proyecto tiene como objetivo la creación de un store individual para un perfil de mercado libre.
 
