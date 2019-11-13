@@ -2,44 +2,48 @@
 
 Demo: http://mimercado.herokuapp.com/
 
-Este proyecto tiene como objetivo la creación de un store individual para un perfil de mercado libre.
+When you use Mercado Libre's free publishing service to get your items
+displayed online to be sold, you are not entitled to a "personal shop" as paid publishings have access.
 
-En la actualidad no existe una forma de ofrecer un listado de todos tus productos a menos que sea un store verificado, este proyecto plantea la posibilidad de tener tu propio listado de productos utilizando el listado privado de artículos:
+
+This project was created as a workaround for the lack of "personal shop" in mercado libre 
+for the occacional users who would like to have a easy way to share all the products that they are selling. 
+
+
 
 https://developers.mercadolibre.com/en_us/search-products-seller
 
 
 **Features**
 
-. Cache con redis para que Meli no te banee la app.
 
-. Listado de productos, incluso si estan pausados.
+. Products get cached using redis for performance improvements
+
+. Lists articles, including those that have been 'paused' in Mercado Libre
 
 **TODO**
 
-1. Una vista como la gente. 
-2. Parece que el token que me da meli en el paso 5 vence a las 24h, hay que meter un poco de magia para que eso no joda.
+1. Nicer looks.
+2. Long lasting token (at this time it expires every 5 minutes).
 3. Heroku deploy
 
 **HOW TO**
 
-Requiere composer y npm instalados en el sistema.
-
 1. Composer install
-2. Creamos una app como developer de meli: http://applications.mercadolibre.com/
-3. Obtenemos el app id y secret key
-4. Vamos a https://developers.mercadolibre.com/en_us/authentication-and-authorization#token ,para permitirle a la app acceder a nuestros datos
-5. vamos a https://api.mercadolibre.com/sites/MLA/search?nickname=TU_NICKNAME_DE_MELI para obtener tu user id.
-6. Ponemos appId, secret key y user id en el archivo .env
-7. Configurar Redis.
+2. Create an app as a developer in MeLi: http://applications.mercadolibre.com/
+3. Get appId and secret from meli
+4. Let the app access your data from https://developers.mercadolibre.com/en_us/authentication-and-authorization#token
+5. get your userId from  https://api.mercadolibre.com/sites/MLA/search?nickname=MELI_USER
+6. add appId, secret key and userId to the .env file
+7. get Redis working.
 8. npm install
-9. npm run watch (para transpiler de css y js)
+9. npm run watch ( css y js transpiler)
 
 
 **Heroku Config**
-1. Crearse un redis en heroku
-2. Entrar en el redis que te creó y copiarse user/password/port/url
-3. meter esos datos junto con los de meli que pusiste en .env usando heroku config:set
+1. create a in heroku
+2. Take note of redis's ip, port and credentials
+3. Add that info alongside appId,secret and userId using heroku config:set
 
 
 
