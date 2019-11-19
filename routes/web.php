@@ -18,3 +18,6 @@ Route::get('/welcome', function () {
 Route::get('/user','UserController@index');
 Route::get('/', 'ProductosController');
 Route::get('/clear', 'ProductosController@clearCache');
+Route::get('/login', 'AuthController@login');
+Route::get('/wantLogIn', 'AuthController@wantLogIn');
+Route::get('/caca{code}', 'AuthController@redirectCallback');
