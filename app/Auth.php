@@ -14,7 +14,7 @@ class Auth
         $meli = new MercadoLibre();
         $appId = $meli->getAppId();
         $secret = $meli->getAppSecret();
-        $appUrl = $meli->getAppUrl();
+        $appUrl = $meli->getAppUrl().'/loginredirect.php';
 
         $url = "https://api.mercadolibre.com/oauth/token?grant_type=authorization_code&client_id=$appId&client_secret=$secret&code=$authCode&redirect_uri=$appUrl";
         $client = new \GuzzleHttp\Client();
