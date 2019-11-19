@@ -20,4 +20,4 @@ Route::get('/', 'ProductosController');
 Route::get('/clear', 'ProductosController@clearCache');
 Route::get('/login', 'AuthController@login');
 Route::get('/wantLogIn', 'AuthController@wantLogIn');
-Route::get('/caca{code}', 'AuthController@redirectCallback');
+Route::get('/loginredirect{code}', 'AuthController@redirectCallback');
