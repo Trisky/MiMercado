@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MercadoLibre;
 use Illuminate\Http\Request;
-//busqueda private by seller id https://developers.mercadolibre.com/en_us/search-products-seller
+//private search by seller id https://developers.mercadolibre.com/en_us/search-products-seller
 class ProductosController extends Controller
 {
     /**

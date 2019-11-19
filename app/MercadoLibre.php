@@ -17,16 +17,41 @@ class MercadoLibre
     CONST CACHE_KEY = 'products';
 
     private $username;
-    private $access_token;
     private $client_id;
+    private $app_id;
+    private $app_secret;
+
+
 
     function __construct()
     {
         $this->username = env('MELI_USERNAME');
         $this->client_id = env('MELI_USERID');
-        $this->access_token = env('MELI_ACCESSTOKEN');
-        $secret = env('MELI_SECRET');
+        $this->app_id = env('MELI_APP_ID');
+        $this->app_secret = env('MELI_SECRET');
+        $this->app_url = env('APP_URL');
     }
+    #region getters and setters
+    /**
+     * @return mixed
+     */
+    public function getAppUrl() {
+        return $this->app_url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppId() {
+        return $this->app_id;
+    }
+    /**
+     * @return mixed
+     */
+    public function getAppSecret() {
+        return $this->app_secret;
+    }
+    #endregion
 
     function getPublicProducts(){
         $client = new \GuzzleHttp\Client();
@@ -36,10 +61,9 @@ class MercadoLibre
         return $products;
     }
 
-
-
     public function clearCache(){
         Redis::del(self::CACHE_KEY);
+        Redis::del(Auth::CACHE_KEY);
     }
 
     /**
@@ -65,14 +89,14 @@ class MercadoLibre
     }
 
     private function getBody($url,$addToken = false) {
-        if($addToken){
-            $url= $url."?access_token=$this->access_token";
+        if($addToken) {
+            $accessToken = (new Auth())->getAccessToken();
+            $url = $url . "?access_token=$accessToken";
         }
         $client = new \GuzzleHttp\Client();
         try{
             $response = $client->request('GET', $url);
         }catch(ClientException $e){
-            //throw new \Exception('Error while trying to fetch products',0,$e);
             $response = $e->getResponse();
             throw new \Exception('Error while trying to fetch products: '.$response->getReasonPhrase(),$response->getStatusCode(),$e);
         }
@@ -86,6 +110,9 @@ class MercadoLibre
      * @return array
      */
     public function fetchPrivateProducts($responses) {
+        if(empty($this->client_id)){
+            throw new \Exception('MELI_USERID is not set in the .env file.');
+        }
         $response1 = $this->getBody("https://api.mercadolibre.com/users/$this->client_id/items/search", true);
         $articleIds = $response1->results;
 
