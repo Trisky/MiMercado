@@ -7,6 +7,7 @@
  */
 
 namespace App\Meli\Products;
+use App\Meli\Connection;
 use App\Meli\Settings;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Redis;
@@ -26,9 +27,13 @@ class ProductsManager
     }
 
     public static function getInstance() {
-        if(is_null(self::$instance)){
-            return new ProductsManager(new ProductsFetcher(new Settings()), new Storage());
-        }else{
+        if (is_null(self::$instance)) {
+            return new ProductsManager(
+                new ProductsFetcher(
+                    new Settings(), new Connection()),
+                new Storage()
+            );
+        } else {
             return self::$instance;
         }
     }
@@ -63,7 +68,7 @@ class ProductsManager
         return $this->productsStorage;
     }
 
-    /** @deprecated  */
+    /** @deprecated
     private function getPublicProducts(){
         $client = new \GuzzleHttp\Client();
         $res = $client->request('GET', "https://api.mercadolibre.com/sites/MLA/search?nickname=$this->username");
@@ -71,6 +76,6 @@ class ProductsManager
         $products = $response->results;
         return $products;
     }
-
+     */
 
 }
