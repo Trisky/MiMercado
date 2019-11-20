@@ -24,8 +24,9 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 **TODO**
 
 1. Nicer looks.
-2. Long lasting token (at this time it expires every 5 minutes).
-3. Heroku deploy
+2. Multitenancy: It should be able to support listing the articles of multiple users at the same time
+2. Admin portal
+3. Hiding certain articles from visitors sight 
 
 **HOW TO**
 
