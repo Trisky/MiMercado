@@ -22,11 +22,11 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 . Lists articles, including those that have been 'paused' in Mercado Libre
 
 **TODO**
-
-1. Nicer looks.
-2. Multitenancy: It should be able to support listing the articles of multiple users at the same time
-2. Admin portal
-3. Hiding certain articles from visitors sight 
+1. Unit tests
+2. Nicer looks.
+3. Multitenancy: It should be able to support listing the articles of multiple users at the same time
+4. Admin portal
+5. Hiding certain articles from visitors sight 
 
 **HOW TO**
 
