@@ -19,5 +19,5 @@ Route::get('/user','UserController@index');
 Route::get('/', 'ProductosController');
 Route::get('/clear', 'ProductosController@clearCache');
 Route::get('/login', 'AuthController@login');
-Route::get('/wantLogIn', 'AuthController@wantLogIn');
+Route::get('/wantlogin', 'AuthController@wantLogIn');
 Route::get('/loginredirect{code}', 'AuthController@redirectCallback');

@@ -6,7 +6,7 @@
  * Time: 10:35 PM
  */
 
-namespace App;
+namespace App\Meli\Products;
 
 
 class Product {
@@ -79,22 +79,19 @@ class Product {
         return $this->title;
     }
 
-    function __construct($id,$res,$description) {
+    function __construct($id,$res) {
         $this->response = $res;
         $this->id = $id;
         $this->title = $res->title;
         $this->price = $res->price;
         $this->condition = $res->condition;
         $this->permaLink = $res->permalink;
-        $this->description = $description;
+        $this->description = $res->description;
         foreach ($res->pictures as $picture){
             $this->addPicture($picture->url);
         }
     }
 
-    /**
-     * para saber ya se vendieron todas las unidades.
-     */
     public function isSoldOut(){
         return $this->response->available_quantity ==0;
     }
@@ -104,7 +101,7 @@ class Product {
      * closed: no
      * active: si
      */
-    public function getStatus(){
+    private function getStatus(){
         return $this->response->status;
     }
 

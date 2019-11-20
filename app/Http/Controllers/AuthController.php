@@ -3,18 +3,15 @@
 
 namespace App\Http\Controllers;
 
-
-use App\MercadoLibre;
+use App\Meli\Settings;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
-use App\Auth;
+use App\Meli\Auth;
 
 class AuthController extends Controller
 {
     public function login(Request $request){
-        $meli = new MercadoLibre();
-        $meli->clearCache();
-        $appId = $meli->getAppId();
+        (new Auth())->clearCache();
+        $appId = (new Settings())->getAppId();
         return redirect($url = "https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=$appId");
     }
 
@@ -28,6 +25,7 @@ class AuthController extends Controller
     }
 
     public function wantLogIn(Request $request){
-        view('wantlogin');
+        //view('wantLogin'); //TODO
+        return redirect('/login');
     }
 }
