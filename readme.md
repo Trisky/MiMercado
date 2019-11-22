@@ -17,9 +17,9 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 **Features**
 
 
-. Products get cached using redis for performance improvements
-
-. Lists articles, including those that have been 'paused' in Mercado Libre
+1. Products get cached using redis for performance improvement.
+2. Lists articles, including those that have been 'paused' in Mercado Libre.
+3. Check github's issues to see upcoming features.
 
 
 **HOW TO**
