@@ -30,12 +30,15 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 5. get your userId from  https://api.mercadolibre.com/sites/MLA/search?nickname=MELI_USER
 6. add appId, secret key and userId to the .env file
 7. get Redis working (apt-get install redis and make sure redis-server is running)
-8. npm install
-9. npm run watch ( css & js transpiler)
+8. Install mysql and add the required credentials into the .env file
+9. php artisan migrate:fresh (drops tables if they exist and recreates the database)
+10. npm install
+111. npm run watch ( css & js transpiler)
+
 
 
 **Heroku Config**
-1. create a in heroku
+1. create an app in heroku
 2. Take note of redis's ip, port and credentials
 3. Add that info alongside appId,secret and userId using heroku config:set
 
