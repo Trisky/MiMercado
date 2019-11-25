@@ -16,12 +16,12 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/user','UserController@index');
-Route::get('/', 'ProductosController');
+Route::get('/products', 'ProductosController');
 Route::get('/clear', 'ProductosController@clearCache');
-Route::get('/login', 'AuthController@login');
+Route::get('/melilogin', 'AuthController@login');
 Route::get('/wantlogin', 'AuthController@wantLogIn');
 Route::get('/loginredirect{code}', 'AuthController@redirectCallback');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');

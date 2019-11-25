@@ -26,6 +26,6 @@ class AuthController extends Controller
 
     public function wantLogIn(Request $request){
         //view('wantLogin'); //TODO
-        return redirect('/login');
+        return redirect('/melilogin');
     }
 }
