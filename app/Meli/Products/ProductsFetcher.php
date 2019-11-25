@@ -33,13 +33,12 @@ class ProductsFetcher
      * @return array
      */
     public function fetchPrivateProducts() {
-        $products = [];
         $clientId = $this->getSettings()->getUserId();
         if(empty($clientId)){
             throw new \Exception('MELI_USERID is not set in the .env file.');
         }
         $response = $this->getConnection()->callWithToken(self::BASEURL."/users/$clientId/items/search");
-        $products = $this->parseProductsFromResponseAndFetchDescriptions($response, $products);
+        $products = $this->parseProductsFromResponseAndFetchDescriptions($response);
         return $products;
     }
 
@@ -58,12 +57,13 @@ class ProductsFetcher
      * @return array
      * @throws \Exception
      */
-    private function parseProductsFromResponseAndFetchDescriptions($productsResponse, array $products): array {
+    private function parseProductsFromResponseAndFetchDescriptions($productsResponse): array {
         $articleIds = $productsResponse->results;
         foreach ($articleIds as $articleId) {
             $productData = $this->fetchProduct($articleId);
             $productData->description  = $this->fetchProductDescription($articleId);
-            $products[] = new Product(0, $productData);
+            $product = $this->buildProduct($productData);
+            $products[] = $product;
         }
         return $products;
     }
@@ -85,5 +85,18 @@ class ProductsFetcher
      */
     private function fetchProduct($id) {
         return $this->getConnection()->call(self::BASEURL."/items/$id");
+    }
+
+    /**
+     * @param $productData
+     * @return Product
+     */
+    private function buildProduct($productData): Product {
+        $pictures = [];
+        foreach ($productData->pictures as $picture) {
+            $pictures[] = $picture->url;
+        }
+        $product = new Product($productData, $pictures);
+        return $product;
     }
 }

@@ -16,7 +16,7 @@ class Storage
         $products = [];
         if (!!$jsonProducts) {
             foreach ($jsonProducts as $jsonProduct) {
-                $products[] = new Product(1, $jsonProduct);
+                $products[] = new Product($jsonProduct,$jsonProduct->pictures);
             }
         }
         return $products;

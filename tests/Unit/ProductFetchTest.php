@@ -15,7 +15,7 @@ class ProductFetchTest extends TestCase
 {
     private $settings;
     private $connection;
-    public function setUp() {
+    public function setUp():void {
         parent::setUp();
         $path = base_path().'/tests/Unit/';
         $connection = Mockery::mock(Connection::class);
@@ -53,8 +53,8 @@ class ProductFetchTest extends TestCase
         $this->assertTrue(count($products)==1);
         $product = current($products);
         /** @var $product Product */
-        $this->assertTrue($product->getPrice() == 4200);
+        $this->assertTrue($product->getPrice() == 30000);
         $this->assertTrue($product->getCondition() == 'used');
-        $this->assertTrue($product->getTitle() =="Router Mikrotik 951g 2hnd");
+        $this->assertTrue($product->getTitle() =="Computadora Gamer - 1060 6gb - Super Compacta!");
     }
 }
