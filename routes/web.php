@@ -21,3 +21,7 @@ Route::get('/clear', 'ProductosController@clearCache');
 Route::get('/login', 'AuthController@login');
 Route::get('/wantlogin', 'AuthController@wantLogIn');
 Route::get('/loginredirect{code}', 'AuthController@redirectCallback');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
