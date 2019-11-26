@@ -5,7 +5,6 @@ import Catalog from './components/Products/Catalog';
 
 const Main = props => (
     <Switch>
-        {/*User might LogIn*/}
         <Route exact path='/app' component={Example}/>
         <Route exact path='/app/Catalog' component={Catalog}/>
     </Switch>
