@@ -35,4 +35,12 @@ class ProductosController extends Controller
         return view('cacheCleared');
     }
 
+    public function apiProducts(Request $request){
+        try{
+            return ProductsManager::getInstance()->getUserProducts();
+        }catch (NoAccessDataException $e){
+            return redirect('/wantlogin');
+        }
+    }
+
 }

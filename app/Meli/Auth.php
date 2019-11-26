@@ -64,7 +64,7 @@ class Auth
      * @return mixed
      * @throws NoAccessDataException
      */
-    private function fetchAccessData(): mixed {
+    private function fetchAccessData() {
         $accessData = Redis::get(self::CACHE_KEY);
         $accessData = json_decode($accessData);
         if (empty($accessData)) {
