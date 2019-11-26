@@ -16,7 +16,6 @@ function Example() {
         </div>
     );
 }
-
 export default Example;
 
 if (document.getElementById('example')) {
