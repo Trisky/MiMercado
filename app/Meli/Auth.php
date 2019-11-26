@@ -23,10 +23,15 @@ class Auth
         }catch (\Exception $e){
             throw new \Exception("Failed to retrieve the access_token from $url ".$e->getMessage(),$e->getCode(),$e);
         }
-        $response = json_decode($res->getBody());
-        $accessToken =  $response->access_token?? null;
-
-        if(empty($accessToken)){
+        $body = $res->getBody();
+        $response = json_decode($body);
+        try{
+            $accessToken =  $response->access_token;
+            $userId = $response->userId;
+        }catch (\Exception $e){
+            throw new \Exception("Failed to get userId and access token from response: $response");
+        }
+        if(empty($accessToken) || empty($userId)){
             throw new \Exception('Access token not received');
         }
         $this->saveAccessToken($response);
@@ -42,12 +47,8 @@ class Auth
      * @throws \Exception
      */
     public function getAccessToken(){
-        $accessData = Redis::get(self::CACHE_KEY);
-        $accessData = json_decode($accessData);
+        $accessData = $this->fetchAccessData();
         $date = time();
-        if(empty($accessData)){
-            throw new NoAccessDataException();
-        }
         if($date>($date+$accessData->expires_in)){
             $token = $accessData->refresh_token;
             $accessData = $this->fetchAndStoreAccessToken($token);
@@ -57,5 +58,18 @@ class Auth
 
     public function clearCache(){
         Redis::del(self::CACHE_KEY);
+    }
+
+    /**
+     * @return mixed
+     * @throws NoAccessDataException
+     */
+    private function fetchAccessData(): mixed {
+        $accessData = Redis::get(self::CACHE_KEY);
+        $accessData = json_decode($accessData);
+        if (empty($accessData)) {
+            throw new NoAccessDataException();
+        }
+        return $accessData;
     }
 }
