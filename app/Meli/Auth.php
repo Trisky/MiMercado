@@ -27,7 +27,7 @@ class Auth
         $response = json_decode($body);
         try{
             $accessToken =  $response->access_token;
-            $userId = $response->userId;
+            $userId = $response->user_id;
         }catch (\Exception $e){
             throw new \Exception("Failed to get userId and access token from response: $response");
         }
