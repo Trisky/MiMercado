@@ -16,7 +16,6 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/user','UserController@index');
-Route::get('/products', 'ProductosController');
 Route::get('/clear', 'ProductosController@clearCache');
 Route::get('/melilogin', 'AuthController@login');
 Route::get('/wantlogin', 'AuthController@wantLogIn');
