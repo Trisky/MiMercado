@@ -61,7 +61,7 @@ class ProductsFetcher
         $articleIds = $productsResponse->results;
         foreach ($articleIds as $articleId) {
             $productData = $this->fetchProduct($articleId);
-            $productData->description  = $this->fetchProductDescription($articleId);
+            $productData->description  = '';// $this->fetchProductDescription($articleId);
             $product = $this->buildProduct($productData);
             $products[] = $product;
         }
