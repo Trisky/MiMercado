@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-
-class Catalog extends React.Component {
-
-
-    constructor(props) {
-        super(props);
-        this.state = {success: false};
+import Catalog from './Catalog';
+class CatalogContainer extends React.Component {
+    state = {
+        success: false
+    };
+    componentDidMount() {
         axios.get('/api/products')
             .then(response => response.data)
             .then(products => {
@@ -15,25 +14,25 @@ class Catalog extends React.Component {
             )
             .catch
             (response => {
-                    this.setState({products: [], success: false})
-                    console.error('failed to retieve products');
+                    this.setState({products: [], success: false});
+                    console.error('error retrieving products');
                     alert('error retrieving products')
                 }
             );
     }
 
     render() {
-        if (this.state.success) {
+        if (this.state && this.state.success) {
             let products = this.state.products;
             console.log(products);
             return (
-                <div className='catalog'>
-                    Here should we see the list with our products
-                </div>
+                <Catalog products={products}/>
             )
         } else {
-            return <div>loading</div>;
+            return <div className="spinner-grow text-warning" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
         }
     }
 }
-export default Catalog;
+export default CatalogContainer;
