@@ -10,7 +10,7 @@ class Product extends Component {
                 <div className="card-body">
                     <h5 className="card-title">{data.title}</h5>
                     <p className="card-text font-weight-bold">${data.price}</p>
-                    <a href={data.permaLink} className="btn btn-primary">Ver en Mercado Libre</a>
+                    <a href={data.permalink} className="btn btn-primary" target="_blank">Ver en Mercado Libre</a>
                 </div>
             </div>
         )
