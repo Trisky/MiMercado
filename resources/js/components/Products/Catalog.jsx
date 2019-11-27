@@ -4,11 +4,11 @@ import Product from './Product'
 class Catalog extends Component {
     render() {
         let products = this.props.products.map(product => {
-            return <Product key={product.id} data={product} className="grid-item"/>
+            return <Product key={product.id} data={product}/>
         });
-        return  <div className="container-fluid">
-                    <div className="grid">{products}</div>
-                </div>
+        return <div className="grid">
+            <div className={'row justify-content-center'}> {products}</div>
+        </div>
     }
 }
 export default Catalog;

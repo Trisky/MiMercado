@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import Catalog from './Catalog';
-class CatalogContainer extends React.Component {
+class CatalogContainer extends Component {
     state = {
         success: false
     };
@@ -26,7 +26,7 @@ class CatalogContainer extends React.Component {
             let products = this.state.products;
             console.log(products);
             return (
-                <Catalog products={products}/>
+                <Catalog  products={products}/>
             )
         } else {
             return <div className="spinner-grow text-warning" role="status">

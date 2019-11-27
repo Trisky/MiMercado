@@ -5,7 +5,7 @@ class Product extends Component {
         let data = this.props.data;
 
         return (
-            <div className="grid-item card p-3 m-3" style={{width: '18rem'}}>
+            <div className="card col-md-3 col-sm-10 m-2" >
                 <img className="card-img-top" src={data.pictures[0]} alt="Card image cap"/>
                 <div className="card-body">
                     <h5 className="card-title">{data.title}</h5>
