@@ -22,7 +22,8 @@ Route::get('/wantlogin', 'AuthController@wantLogIn');
 Route::get('/loginredirect{code}', 'AuthController@redirectCallback');
 
 Auth::routes();
-Route::get('/', 'HomeController@index')->name('home');
+
 
 //React app
 Route::view('/app/{path?}', 'app');
+Route::view('/', 'app');

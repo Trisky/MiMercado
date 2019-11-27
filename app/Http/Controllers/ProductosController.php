@@ -23,7 +23,7 @@ class ProductosController extends Controller
         try{
             return ProductsManager::getInstance()->getUserProducts();
         }catch (NoAccessDataException $e){
-            return redirect('/wantlogin');
+            return redirect('/');
         }
     }
 

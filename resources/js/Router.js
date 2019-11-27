@@ -5,7 +5,7 @@ import CatalogContainer from './components/Products/CatalogContainer';
 
 const Main = props => (
     <Switch>
-        <Route exact path='/app' component={Login}/>
+        <Route exact path='/' component={Login}/>
         <Route exact path='/app/Catalog' component={CatalogContainer}/>
     </Switch>
 );

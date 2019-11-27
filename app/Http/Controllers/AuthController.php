@@ -21,11 +21,6 @@ class AuthController extends Controller
             throw new \Exception('No auth code received');
         }
         (new Auth())->fetchAndStoreAccessToken($authCode);
-        return redirect('/');
-    }
-
-    public function wantLogIn(Request $request){
-        //view('wantLogin'); //TODO
-        return redirect('/melilogin');
+        return redirect('/app/catalog');
     }
 }
