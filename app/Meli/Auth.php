@@ -5,6 +5,7 @@ namespace App\Meli;
 
 
 use Illuminate\Support\Facades\Redis;
+use Predis\Connection\ConnectionException;
 
 class Auth
 {
@@ -57,7 +58,11 @@ class Auth
     }
 
     public function clearCache(){
-        Redis::del(self::CACHE_KEY);
+        try{
+            Redis::del(self::CACHE_KEY);
+        }catch (ConnectionException $e){
+            throw new \Exception('Failed to connect to redis. Is the service running and the env data correct?');
+        }
     }
 
     /**
