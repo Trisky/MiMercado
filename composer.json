@@ -17,6 +17,7 @@
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "laravel/helpers": "^1.1",
+        "laravel/ui": "^1.1",
         "nunomaduro/collision": "^2.0",
         "phpunit/phpunit": "8"
     },

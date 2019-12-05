@@ -6,6 +6,7 @@ namespace App\Meli\Products;
 
 use App\Meli\Auth;
 use App\Meli\Connection;
+use App\Meli\NoAccessDataException as NoAccessDataException;
 use App\Meli\Settings;
 use GuzzleHttp\Exception\ClientException;
 
@@ -15,6 +16,7 @@ class ProductsFetcher
 
     private $settings;
     private $connection;
+    private $auth;
 
     /**
      * @return Connection
@@ -23,21 +25,27 @@ class ProductsFetcher
         return $this->connection;
     }
 
-    public function __construct(Settings $settings,Connection $connection) {
+    public function __construct(Settings $settings,Connection $connection,Auth $auth) {
         $this->connection = $connection;
         $this->settings = $settings;
+        $this->auth = $auth;
     }
 
     /**
      * @param $responses
      * @return array
      */
-    public function fetchPrivateProducts() {
-        $clientId = $this->getSettings()->getUserId();
-        if(empty($clientId)){
-            throw new \Exception('MELI_USERID is not set in the .env file.');
+    public function fetchPrivateProducts(string $username) {
+        if(empty($username)){
+            throw new \Exception('username must be provided to be able to fetch the products');
         }
-        $response = $this->getConnection()->callWithToken(self::BASEURL."/users/$clientId/items/search");
+        $token = $this->getAuth()->getAccessToken($username);
+        $userId = $this->getAuth()->getUserId($username);
+        if (empty($token) || empty($userId)) {
+            throw new \Exception("Missing token or userId, token=$token, userid=$userId");
+        }
+
+        $response = $this->getConnection()->callWithToken(self::BASEURL."/users/$userId/items/search",$token);
         $products = $this->parseProductsFromResponseAndFetchDescriptions($response);
         return $products;
     }
@@ -61,7 +69,7 @@ class ProductsFetcher
         $articleIds = $productsResponse->results;
         foreach ($articleIds as $articleId) {
             $productData = $this->fetchProduct($articleId);
-            $productData->description  = $this->fetchProductDescription($articleId);
+            $productData->description  = '';// $this->fetchProductDescription($articleId);
             $product = $this->buildProduct($productData);
             $products[] = $product;
         }
@@ -98,5 +106,9 @@ class ProductsFetcher
         }
         $product = new Product($productData, $pictures);
         return $product;
+    }
+
+    private function getAuth() : Auth {
+        return $this->auth;
     }
 }

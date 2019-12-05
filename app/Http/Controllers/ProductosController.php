@@ -6,33 +6,37 @@ use App\Meli\Auth;
 use app\Meli\NoAccessDataException;
 use App\Meli\Products\ProductsFetcher;
 use App\Meli\Products\ProductsManager;
+use App\Meli\Products\ProductsManagerBuilder;
 use App\Meli\Products\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis as RedisClient;
 
 
 //private search by seller id https://developers.mercadolibre.com/en_us/search-products-seller
 class ProductosController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
-    {
-        try{
-            $products = ProductsManager::getInstance()->getUserProducts();
-        }catch (NoAccessDataException $e){
-            return redirect('/wantlogin');
+    public function clearCache(Request $request) {
+        $username = $request->route('username');
+        if(empty($username)){
+            throw new \Exception('should provide a username to clean its data ex: /clear/john');
         }
-        return view('products', ['products' =>$products]);
+        (new Auth())->clearCache($username);
+        (new Storage())->clearCache($username);
+        return view('cacheCleared');
     }
 
-    public function clearCache(Request $request) {
-        (new Storage())->clearCache();
-        (new Auth())->clearCache();
-        return view('cacheCleared');
+    public function apiProducts(Request $request){
+        try{
+            $username = $request->route('username');
+            if(empty($username)){
+                throw new \Exception('username must be provided for the listing of the products');
+            }
+            $auth = new Auth();
+            $manager = (new ProductsManagerBuilder())->build();
+            return $manager->getUserProducts($username);
+        }catch (NoAccessDataException $e){
+            return redirect('/notexist');
+        }
     }
 
 }

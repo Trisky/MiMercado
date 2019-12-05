@@ -7,12 +7,9 @@
  */
 
 namespace App\Meli\Products;
+use App\Meli\Auth;
 use App\Meli\Connection;
 use App\Meli\Settings;
-use GuzzleHttp\Exception\ClientException;
-use Illuminate\Support\Facades\Redis;
-
-
 
 class ProductsManager
 {
@@ -30,7 +27,7 @@ class ProductsManager
         if (is_null(self::$instance)) {
             return new ProductsManager(
                 new ProductsFetcher(
-                    new Settings(), new Connection()),
+                    new Settings(), new Connection(),new Auth()),
                 new Storage()
             );
         } else {
@@ -42,10 +39,10 @@ class ProductsManager
      * Fetches the user products from the database or from meli if they are not present in the database
      * @return array
      */
-    public function getUserProducts() {
-        $products = $this->getProductsStorage()->fetchProductsFromDatabase();
+    public function getUserProducts(string $username) {
+        $products = $this->getProductsStorage()->fetchProductsFromDatabase($username);
         if (empty($products)) {
-            $products = $this->fetchProductsFromMeli();
+            $products = $this->fetchProductsFromMeli($username);
         }
         return $products;
     }
@@ -55,9 +52,10 @@ class ProductsManager
      * @return array
      * @throws \Exception
      */
-    private function fetchProductsFromMeli(): array {
-        $responses = $this->getProductsFetcher()->fetchPrivateProducts();
-        $this->getProductsStorage()->storeProducts($responses);
+    private function fetchProductsFromMeli(string $username): array {
+        $username = strtoupper($username);
+        $responses = $this->getProductsFetcher()->fetchPrivateProducts($username);
+        $this->getProductsStorage()->storeProducts($responses,$username);
         return $responses;
     }
 
@@ -70,11 +68,7 @@ class ProductsManager
 
     /** @deprecated
     private function getPublicProducts(){
-        $client = new \GuzzleHttp\Client();
         $res = $client->request('GET', "https://api.mercadolibre.com/sites/MLA/search?nickname=$this->username");
-        $response = json_decode($res->getBody());
-        $products = $response->results;
-        return $products;
     }
      */
 

@@ -17,26 +17,11 @@ class Settings
 
     function __construct()
     {
-        $this->username = env('MELI_USERNAME');
-        $this->user_id = env('MELI_USERID');
         $this->app_id = env('MELI_APP_ID');
         $this->app_secret = env('MELI_SECRET');
         $this->app_url = env('APP_URL');
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUsername() {
-        return $this->username;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserId() {
-        return $this->user_id;
-    }
 
     /**
      * @return mixed
@@ -58,6 +43,4 @@ class Settings
     public function getAppUrl() {
         return $this->app_url;
     }
-
-
 }

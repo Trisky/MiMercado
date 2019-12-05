@@ -5,14 +5,15 @@ namespace App\Meli\Products;
 
 
 use App\Meli\Auth;
-use Illuminate\Support\Facades\Redis;
+use App\Storage\Redis;
 
 class Storage
 {
     CONST CACHE_KEY = 'products';
 
-    public function fetchProductsFromDatabase(): array {
-        $jsonProducts = json_decode(Redis::get(self::CACHE_KEY));
+    public function fetchProductsFromDatabase(string $username): array {
+
+        $jsonProducts = Redis::getFromUser(self::CACHE_KEY,$username);
         $products = [];
         if (!!$jsonProducts) {
             foreach ($jsonProducts as $jsonProduct) {
@@ -25,12 +26,11 @@ class Storage
     /**
      * @param array $responses
      */
-    public function storeProducts(array $responses): void {
-        Redis::setex(self::CACHE_KEY, 60 * 60 * 24, json_encode($responses));
+    public function storeProducts(array $responses,$username): void {
+        Redis::saveForUser($responses,self::CACHE_KEY,$username);
     }
 
-    public function clearCache(){
-        Redis::del(self::CACHE_KEY);
+    public function clearCache($username){
+        Redis::delete(self::CACHE_KEY,$username);
     }
-
 }
