@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Meli\Settings;
 use Illuminate\Http\Request;
 use App\Meli\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -22,7 +23,8 @@ class AuthController extends Controller
     public function redirectCallback(Request $request){
         $authCode = $request->input('code');
         if(empty($authCode)){
-            throw new \Exception('No auth code received');
+            Log::info('No auth code received. Maybe the user said no to the app authorization in Mercado Libre?');
+            return redirect("/");
         }
         $username = (new Auth())->fetchAndStoreAccessToken($authCode);
 
