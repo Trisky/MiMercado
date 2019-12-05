@@ -31,14 +31,4 @@ class ProductsManagerBuilder
             new Storage()
         );
     }
-
-    public function customBuild() {
-        if (empty($this->connection) || empty($this->settings) || empty($this->storage)) {
-            throw new \Exception('This method requires you to initialize storage, settings and connection before building, you may want to use defaultBuild');
-        }
-        return new ProductsManager(new ProductsFetcher(
-            $this->settings, $this->connection),
-            $this->storage
-        );
-    }
 }
