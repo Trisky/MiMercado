@@ -16,8 +16,16 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/user','UserController@index');
-Route::get('/', 'ProductosController');
 Route::get('/clear', 'ProductosController@clearCache');
-Route::get('/login', 'AuthController@login');
-Route::get('/wantLogIn', 'AuthController@wantLogIn');
+Route::get('/melilogin', 'AuthController@login');
+Route::get('/wantlogin', 'AuthController@wantLogIn');
 Route::get('/loginredirect{code}', 'AuthController@redirectCallback');
+
+Auth::routes();
+
+
+//React app
+
+Route::view('/app/catalog/{path?}', 'app');
+//Route::view('/app/{path?}', 'app');
+Route::view('/', 'app');
