@@ -24,8 +24,7 @@ class Connection
         }
     }
 
-    public function callWithToken($url){
-        $accessToken = (new Auth())->getAccessToken();
+    public function callWithToken($url,$accessToken){
         $url = $url . "?access_token=$accessToken";
         return $this->call($url);
     }

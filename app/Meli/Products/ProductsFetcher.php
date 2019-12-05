@@ -6,6 +6,7 @@ namespace App\Meli\Products;
 
 use App\Meli\Auth;
 use App\Meli\Connection;
+use App\Meli\NoAccessDataException as NoAccessDataException;
 use App\Meli\Settings;
 use GuzzleHttp\Exception\ClientException;
 
@@ -32,12 +33,17 @@ class ProductsFetcher
      * @param $responses
      * @return array
      */
-    public function fetchPrivateProducts() {
-        $clientId = $this->getSettings()->getUserId();
-        if(empty($clientId)){
-            throw new \Exception('MELI_USERID is not set in the .env file.');
+    public function fetchPrivateProducts(string $username) {
+        if(empty($username)){
+            throw new \Exception('username must be provided to be able to fetch the products');
         }
-        $response = $this->getConnection()->callWithToken(self::BASEURL."/users/$clientId/items/search");
+        $token = (new Auth())->getAccessToken($username);
+        $userId = (new Auth())->getUserId($username);
+        if (empty($token) || empty($userId)) {
+            throw new \Exception("Missing token or userId, token=$token, userid=$userId");
+        }
+
+        $response = $this->getConnection()->callWithToken(self::BASEURL."/users/$userId/items/search",$token);
         $products = $this->parseProductsFromResponseAndFetchDescriptions($response);
         return $products;
     }

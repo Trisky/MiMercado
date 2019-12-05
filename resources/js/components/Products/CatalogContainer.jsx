@@ -6,7 +6,9 @@ class CatalogContainer extends Component {
         success: false
     };
     componentDidMount() {
-        axios.get('/api/products')
+        const { match: { params } } = this.props;
+        let username = params.username;
+        axios.get(`/api/products/${username}`)
             .then(response => response.data)
             .then(products => {
                     this.setState({products: products, success: true})
