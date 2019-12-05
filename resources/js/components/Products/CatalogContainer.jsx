@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import Catalog from './Catalog';
+import CatalogHeader from './CatalogHeader';
 class CatalogContainer extends Component {
     state = {
         success: false
@@ -27,9 +28,10 @@ class CatalogContainer extends Component {
         if (this.state && this.state.success) {
             let products = this.state.products;
             console.log(products);
-            return (
-                <Catalog  products={products}/>
-            )
+            return <div>
+                <CatalogHeader/>
+                <Catalog products={products}/>
+            </div>
         } else {
             return <div className="spinner-grow text-warning" role="status">
                 <span className="sr-only">Loading...</span>
