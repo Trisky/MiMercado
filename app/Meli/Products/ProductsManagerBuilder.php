@@ -4,6 +4,7 @@
 namespace App\Meli\Products;
 
 
+use App\Meli\Auth;
 use App\Meli\Connection;
 use App\Meli\Settings;
 
@@ -26,7 +27,7 @@ class ProductsManagerBuilder
     public function build(){
         return new ProductsManager(
             new ProductsFetcher(
-                new Settings(), new Connection()),
+                new Settings(), new Connection(),new Auth()),
             new Storage()
         );
     }

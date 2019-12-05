@@ -16,6 +16,7 @@ class ProductsFetcher
 
     private $settings;
     private $connection;
+    private $auth;
 
     /**
      * @return Connection
@@ -24,9 +25,10 @@ class ProductsFetcher
         return $this->connection;
     }
 
-    public function __construct(Settings $settings,Connection $connection) {
+    public function __construct(Settings $settings,Connection $connection,Auth $auth) {
         $this->connection = $connection;
         $this->settings = $settings;
+        $this->auth = $auth;
     }
 
     /**
@@ -37,8 +39,8 @@ class ProductsFetcher
         if(empty($username)){
             throw new \Exception('username must be provided to be able to fetch the products');
         }
-        $token = (new Auth())->getAccessToken($username);
-        $userId = (new Auth())->getUserId($username);
+        $token = $this->getAuth()->getAccessToken($username);
+        $userId = $this->getAuth()->getUserId($username);
         if (empty($token) || empty($userId)) {
             throw new \Exception("Missing token or userId, token=$token, userid=$userId");
         }
@@ -104,5 +106,9 @@ class ProductsFetcher
         }
         $product = new Product($productData, $pictures);
         return $product;
+    }
+
+    private function getAuth() : Auth {
+        return $this->auth;
     }
 }

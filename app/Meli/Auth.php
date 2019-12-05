@@ -61,7 +61,7 @@ class Auth
     private function getAccessData($username) {
         if(!empty($this->accessData[$username])){
             return $this->accessData[$username];
-        }//TODO cache
+        }
         $accessData = Redis::getFromUser(self::CACHE_KEY,$username);
         if (empty($accessData)) {
             throw new NoAccessDataException();
@@ -71,7 +71,8 @@ class Auth
             $token = $accessData->refresh_token;
             $accessData = $this->fetchAndStoreAccessToken($token);
         }
-        return $accessData;
+        $this->accessData[$username] = $accessData;
+        return $this->accessData[$username];
     }
 
     /**
