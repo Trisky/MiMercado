@@ -30,7 +30,7 @@ class Storage
         Redis::saveForUser($responses,self::CACHE_KEY,$username);
     }
 
-    public function clearCache(){
-        Redis::delete(self::CACHE_KEY);
+    public function clearCache($username){
+        Redis::delete(self::CACHE_KEY,$username);
     }
 }

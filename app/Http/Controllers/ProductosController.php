@@ -16,9 +16,12 @@ use Illuminate\Support\Facades\Redis as RedisClient;
 class ProductosController extends Controller
 {
     public function clearCache(Request $request) {
-//        (new Storage())->clearCache();
-//        (new Auth())->clearCache();
-        RedisClient::flushDB();
+        $username = $request->route('username');
+        if(empty($username)){
+            throw new \Exception('should provide a username to clean its data ex: /clear/john');
+        }
+        (new Auth())->clearCache($username);
+        (new Storage())->clearCache($username);
         return view('cacheCleared');
     }
 
