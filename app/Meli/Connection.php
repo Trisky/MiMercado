@@ -20,7 +20,12 @@ class Connection
             return json_decode($response->getBody());
         }catch(ClientException $e){
             $response = $e->getResponse();
-            throw new \Exception('Error while trying to fetch products: '.$response->getReasonPhrase(),$response->getStatusCode(),$e);
+            if($e->getCode() == 401){
+                throw new UnauthorizedException($e->getMessage(),$e->getCode(),$e->getMessage());
+            }else{
+                throw new \Exception('Error while trying to fetch products: '.$response->getReasonPhrase(),$response->getStatusCode(),$e);
+            }
+
         }
     }
 

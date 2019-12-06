@@ -8,6 +8,7 @@ use App\Meli\Products\ProductsFetcher;
 use App\Meli\Products\ProductsManager;
 use App\Meli\Products\ProductsManagerBuilder;
 use App\Meli\Products\Storage;
+use App\Meli\UnauthorizedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis as RedisClient;
 
@@ -36,6 +37,8 @@ class ProductosController extends Controller
             return $manager->getUserProducts($username);
         }catch (NoAccessDataException $e){
             return redirect('/notexist');
+        }catch (UnauthorizedException $e){
+            return redirect('/unauthorized');
         }
     }
 
