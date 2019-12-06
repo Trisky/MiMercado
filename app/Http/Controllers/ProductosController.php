@@ -34,7 +34,7 @@ class ProductosController extends Controller
             }
             $auth = new Auth();
             $manager = (new ProductsManagerBuilder())->build();
-            return $manager->getUserProducts($username);
+            return ['products'=>$manager->getUserProducts($username),'status'=>'success'];
         }catch (NoAccessDataException $e){
             return redirect('/notexist');
         }catch (UnauthorizedException $e){
