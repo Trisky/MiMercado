@@ -66,6 +66,7 @@ class ProductsFetcher
      * @throws \Exception
      */
     private function parseProductsFromResponseAndFetchDescriptions($productsResponse): array {
+        $products = [];
         $articleIds = $productsResponse->results;
         foreach ($articleIds as $articleId) {
             $productData = $this->fetchProduct($articleId);
