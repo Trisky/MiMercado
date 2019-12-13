@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import Catalog from './Catalog';
-import CatalogHeader from './CatalogHeader';
+import {LoadingHeader,ErrorHeader,InfoHeader}  from './Header';
+import CopyToClipboardIcon from "../CopyToClipboardIcon";
 class CatalogContainer extends Component {
 
     status = {
@@ -38,40 +39,27 @@ class CatalogContainer extends Component {
             case this.status.success:
                 let products = this.state.products;
                 console.log({products});
-                return (<div>
-                    <CatalogHeader/>
+                return <div>
+                    <InfoHeader content={<HeaderContent/>}/>
                     <Catalog products={products}/>
-                </div>);
+                </div>;
             case this.status.loading:
-                return <CatalogLoader/>;
+                return <LoadingHeader content={'Loading'}/>;
             case this.status.error:
-                return <CatalogError/>;
+                return <ErrorHeader content={<strong>Failed to load the catalog</strong>}/>;
             case this.status.waiting:
-                return <CatalogWaiting/>;
+                return <LoadingHeader content={'The catalog is being retrieved from Mercado Libre, please wait'}/>;
             default:
-                console.error(this.state.status+  " is an unknown status");
+                console.error(this.state.status + " is an unknown status");
         }
     }
 }
 export default CatalogContainer;
 
-
-//todo all the loaders should be a component
-function CatalogLoader(){
-    return <div className="spinner-grow text-warning" role="status">
-        <span className="sr-only">Loading...</span>
-    </div>
-}
-
-function CatalogError(){
-    return <div className="alert alert-error col-md-6 col-sm-12 mx-auto text-center ">
-        <strong>Failed to load the catalog</strong>
-    </div>
-}
-
-function CatalogWaiting(){
-    return <div className="alert alert-warning col-md-6 col-sm-12 mx-auto text-center ">
-        <strong>The catalog is being retrieved from Mercado Libre, please wait</strong>
-        <CatalogLoader/>
-    </div>
+function HeaderContent(){
+    const href = window.location.href;
+    return <div>
+        <strong>Share it!</strong> {href}
+        <CopyToClipboardIcon text={href}/>
+    </div>;
 }
