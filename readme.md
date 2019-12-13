@@ -2,6 +2,9 @@
 
 Demo: http://mimercado.herokuapp.com/
 
+
+![](demo.gif)
+
 When you use Mercado Libre's free publishing service to get your items
 displayed online to be sold, you are not entitled to a "personal shop" as paid publishings have access.
 
