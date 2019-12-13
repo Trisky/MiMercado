@@ -30,6 +30,7 @@ class Redis
     }
 
     private static function buildKey(string $key, string $username): string {
+        $username = strtoupper($username);
         return $username . ':' . $key;
     }
 

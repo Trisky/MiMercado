@@ -7,6 +7,7 @@ class CatalogContainer extends Component {
     status = {
         success: 'success',
         loading: 'loading',
+        waiting: 'waiting',//wait for the products to be available
         error: 'error'
     };
 
@@ -32,10 +33,11 @@ class CatalogContainer extends Component {
     }
 
     render() {
+        console.log(this.state.status);
         switch (this.state.status) {
             case this.status.success:
                 let products = this.state.products;
-                console.log(products);
+                console.log({products});
                 return (<div>
                     <CatalogHeader/>
                     <Catalog products={products}/>
@@ -44,6 +46,8 @@ class CatalogContainer extends Component {
                 return <CatalogLoader/>;
             case this.status.error:
                 return <CatalogError/>;
+            case this.status.waiting:
+                return <CatalogWaiting/>;
             default:
                 console.error(this.state.status+  " is an unknown status");
         }
@@ -51,6 +55,8 @@ class CatalogContainer extends Component {
 }
 export default CatalogContainer;
 
+
+//todo all the loaders should be a component
 function CatalogLoader(){
     return <div className="spinner-grow text-warning" role="status">
         <span className="sr-only">Loading...</span>
@@ -59,7 +65,13 @@ function CatalogLoader(){
 
 function CatalogError(){
     return <div className="alert alert-error col-md-6 col-sm-12 mx-auto text-center ">
-        <strong>Failed to load the catalog:</strong>
+        <strong>Failed to load the catalog</strong>
     </div>
 }
 
+function CatalogWaiting(){
+    return <div className="alert alert-warning col-md-6 col-sm-12 mx-auto text-center ">
+        <strong>The catalog is being retrieved from Mercado Libre, please wait</strong>
+        <CatalogLoader/>
+    </div>
+}

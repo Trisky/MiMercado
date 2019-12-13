@@ -27,6 +27,8 @@ class Storage
      * @param array $responses
      */
     public function storeProducts(array $responses,$username): void {
+        $catalog = new CatalogStatus($username);
+        $catalog->setLoaded();
         Redis::saveForUser($responses,self::CACHE_KEY,$username);
     }
 

@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Meli\Products\CatalogStatus;
 use App\Meli\Settings;
 use Illuminate\Http\Request;
 use App\Meli\Auth;
@@ -27,6 +28,7 @@ class AuthController extends Controller
             return redirect("/");
         }
         $username = (new Auth())->fetchAndStoreAccessToken($authCode);
+        (new CatalogStatus($username))->setNotFound();
 
         return redirect("/app/catalog/$username");
     }
