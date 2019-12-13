@@ -30,6 +30,6 @@ class AuthController extends Controller
         $username = (new Auth())->fetchAndStoreAccessToken($authCode);
         (new CatalogStatus($username))->setNotFound();
 
-        return redirect("/app/catalog/$username");
+        return redirect("/$username");
     }
 }

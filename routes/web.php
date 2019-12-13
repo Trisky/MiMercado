@@ -29,3 +29,4 @@ Auth::routes();
 Route::view('/app/catalog/{path?}', 'app');
 Route::view('app/{path?}', 'app');
 Route::view('/', 'app');
+Route::view('/{path?}', 'app');

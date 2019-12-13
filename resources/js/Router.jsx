@@ -7,6 +7,7 @@ import Notfound from './components/Products/Notfound';
 const Main = props => (
     <Switch>
         <Route exact path='/' component={Login}/>
+        <Route exact path='/:username' component={CatalogContainer}/>
         <Route exact path='/app/Catalog/:username' component={CatalogContainer}/>
         <Route exact path='/app/notfound' component={Notfound}/>
     </Switch>
