@@ -15,7 +15,7 @@ class CatalogContainer extends Component {
     state = {
         status: this.status.loading
     };
-    componentDidMount() {
+    loadProducts() {
         const { match: { params } } = this.props;
         let username = params.username;
         axios.get(`/api/products/${username}`)
@@ -31,6 +31,9 @@ class CatalogContainer extends Component {
                     alert('error retrieving products')
                 }
             );
+    }
+    componentDidMount() {
+        this.loadProducts();
     }
 
     render() {
@@ -48,10 +51,15 @@ class CatalogContainer extends Component {
             case this.status.error:
                 return <ErrorHeader content={<strong>Failed to load the catalog</strong>}/>;
             case this.status.waiting:
+                this.queueReload();
                 return <LoadingHeader content={'The catalog is being retrieved from Mercado Libre, please wait'}/>;
             default:
                 console.error(this.state.status + " is an unknown status");
         }
+    }
+
+    queueReload() {
+        setTimeout(() => this.loadProducts(), 2000);
     }
 }
 export default CatalogContainer;
