@@ -17,6 +17,7 @@ class CatalogStatus
     CONST LOADED = 'loaded';
     CONST WAITING = 'waiting'; //we're waiting for whe job to run and finish.
     CONST NOTFOUND = 'notfound';
+    CONST NOTAVALILABLE = 'notavailable';
 
     CONST KEY = 'catalog_status';
 
@@ -34,12 +35,16 @@ class CatalogStatus
     public function setNotFound(){
         $this->setStatus(self::NOTFOUND);
     }
+    public function setNotAvailable() {
+        $this->setStatus(self::NOTAVALILABLE);
+    }
 
     private function getStatuses(){
         return [
             self::LOADED => self::LOADED,
             self::WAITING => self::WAITING,
-            self::NOTFOUND => self::NOTFOUND
+            self::NOTFOUND => self::NOTFOUND,
+            self::NOTAVALILABLE => self::NOTAVALILABLE
         ];
     }
 

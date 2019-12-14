@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Meli\Products\CatalogStatus;
 use App\Meli\Products\ProductsManagerBuilder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,6 +32,14 @@ class FetchCatalog implements ShouldQueue
     public function handle() {
         $manager = (new ProductsManagerBuilder())->build();
         $username = strtoupper($this->username);
-        $manager->fetchAndStoreProducts($username);
+        try{
+            $catalog = new CatalogStatus($username);
+            $manager->fetchAndStoreProducts($username);
+            $catalog->setLoaded();
+        }catch (\Exception $e){
+            $catalog->setNotAvailable();
+            throw new \Exception('Failed to fetch catalog'.$e->getMessage(),$e->getCode(),$e);
+        }
+
     }
 }

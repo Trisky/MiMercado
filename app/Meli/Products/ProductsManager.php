@@ -11,6 +11,7 @@ use App\Jobs\FetchCatalog;
 use App\Meli\Auth;
 use App\Meli\Connection;
 use App\Meli\Settings;
+use App\Meli\UnauthorizedException;
 
 class ProductsManager
 {
@@ -46,6 +47,11 @@ class ProductsManager
      */
     public function getUserProducts(string $username) {
         $userCatalog = new CatalogStatus($username);
+        try{
+            (new Auth())->getAccessToken($username);
+        }catch (\Exception $e){
+            throw new UnauthorizedException();
+        }
         $catalogStatus = $userCatalog->getCatalogStatus();
         switch ($catalogStatus){
             case $userCatalog::LOADED:
@@ -56,8 +62,10 @@ class ProductsManager
                 throw new CatalogNotReadyYet($username);
             case $userCatalog::WAITING:
                 throw new CatalogNotReadyYet($username);
+            case $userCatalog::NOTAVALILABLE:
+                throw new UnauthorizedException();
             default:
-                throw new CatalogNotReadyYet($username.'_'.$catalogStatus);
+                throw new \Exception($username.'_'.$catalogStatus);
         }
     }
 

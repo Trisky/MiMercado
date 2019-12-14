@@ -6,13 +6,10 @@ use App\Meli\Auth;
 use app\Meli\NoAccessDataException;
 use App\Meli\Products\CatalogNotReadyYet;
 use App\Meli\Products\CatalogStatus;
-use App\Meli\Products\ProductsFetcher;
-use App\Meli\Products\ProductsManager;
 use App\Meli\Products\ProductsManagerBuilder;
 use App\Meli\Products\Storage;
 use App\Meli\UnauthorizedException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis as RedisClient;
 
 
 //private search by seller id https://developers.mercadolibre.com/en_us/search-products-seller
@@ -35,13 +32,12 @@ class ProductosController extends Controller
             if(empty($username)){
                 throw new \Exception('username must be provided for the listing of the products');
             }
-            $auth = new Auth();
             $manager = (new ProductsManagerBuilder())->build();
             return ['products'=>$manager->getUserProducts($username),'status'=>'success'];
         }catch (NoAccessDataException $e){
             return view('meliAuth/notexist');
         }catch (UnauthorizedException $e){
-            return view('meliAuth/unauthorized');
+            return ['products'=>[],'status'=>CatalogStatus::NOTAVALILABLE];
         }catch (CatalogNotReadyYet $e){
             return ['products'=>[],'status'=>CatalogStatus::WAITING];
         }
