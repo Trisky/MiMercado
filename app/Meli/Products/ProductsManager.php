@@ -61,6 +61,7 @@ class ProductsManager
                 $userCatalog->setWaiting();
                 throw new CatalogNotReadyYet($username);
             case $userCatalog::WAITING:
+            case $userCatalog::LOADING;
                 throw new CatalogNotReadyYet($username);
             case $userCatalog::NOTAVALILABLE:
                 throw new UnauthorizedException();

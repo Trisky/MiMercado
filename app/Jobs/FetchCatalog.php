@@ -30,10 +30,16 @@ class FetchCatalog implements ShouldQueue
      * @param $username
      */
     public function handle() {
-        $manager = (new ProductsManagerBuilder())->build();
         $username = strtoupper($this->username);
+        $this->validate($username);
+        $manager = (new ProductsManagerBuilder())->build();
+        $catalog = new CatalogStatus($username);
+        if($catalog->isLoading()){
+            Log::info("Catalog for the user $username is loading, this job will be skipped.");
+            return;
+        }
+        $catalog->setLoading();
         try{
-            $catalog = new CatalogStatus($username);
             $manager->fetchAndStoreProducts($username);
             $catalog->setLoaded();
         }catch (\Exception $e){
@@ -41,5 +47,15 @@ class FetchCatalog implements ShouldQueue
             throw new \Exception('Failed to fetch catalog'.$e->getMessage(),$e->getCode(),$e);
         }
 
+    }
+
+    /**
+     * @param string $username
+     * @throws \Exception
+     */
+    private function validate(string $username): void {
+        if (empty($username)) {
+            throw new \Exception('Catalog fetch requires a username but none was provided');
+        }
     }
 }
