@@ -9,7 +9,8 @@ class CatalogContainer extends Component {
         success: 'success',
         loading: 'loading',
         waiting: 'waiting',//wait for the products to be available
-        error: 'error'
+        error: 'error',
+        notAvailable: 'notavailable',
     };
 
     state = {
@@ -48,6 +49,8 @@ class CatalogContainer extends Component {
                 </div>;
             case this.status.loading:
                 return <LoadingHeader content={'Loading'}/>;
+            case this.status.notAvailable:
+                return <ErrorHeader content={<strong>Catalog not available for this user</strong>}/>;
             case this.status.error:
                 return <ErrorHeader content={<strong>Failed to load the catalog</strong>}/>;
             case this.status.waiting:

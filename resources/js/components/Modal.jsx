@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { IoMdSad } from "react-icons/io";
 
-class GenericModal extends Component {
+class Modal extends Component {
     render() {
         return <div className={' py-4 row justify-content-center'}>
             <div className={'col-md-6'}>
@@ -23,21 +23,21 @@ class GenericModal extends Component {
     }
 }
 
-export class Login extends GenericModal {
+export class LoginModal extends Modal {
     header = 'Login to Mercado Libre to list your products';
     body1 = <div className={'col-md-6 '}>
-        <a className={'btn btn-primary'} href={'www.mercadolibre.com.ar/publicar'}>
+        <a className={'btn btn-primary'} href={'/melilogin'}>
             Log in to Mercado Libre
         </a>
     </div>;
     body2 = '';
 
 }
-export class EmptyCatalog extends GenericModal {
+export class EmptyCatalog extends Modal {
     header = <div>Your catalog is empty  <IoMdSad/> </div>;
     body1 = '';
     body2 = <div className={'col-md-6 '}>
-        <a className={'btn btn-primary'} href={'/melilogin'}>
+        <a className={'btn btn-primary'} href={'www.mercadolibre.com.ar/publicar'}>
             Publish something!
         </a>
     </div>;

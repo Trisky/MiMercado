@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Product from './Product'
-import {EmptyCatalog} from "../Login";
+import {EmptyCatalog} from "../Modal";
 
 class Catalog extends Component {
     render() {
