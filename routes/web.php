@@ -27,6 +27,7 @@ Auth::routes();
 //React app
 
 Route::view('/app/catalog/{path?}', 'app');
+Route::view('/app/admin/{path?}', 'app');
 Route::view('app/{path?}', 'app');
 Route::view('/', 'app');
 Route::view('/{path?}', 'app');

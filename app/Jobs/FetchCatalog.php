@@ -47,7 +47,6 @@ class FetchCatalog implements ShouldQueue
             $catalog->setNotAvailable();
             throw new \Exception('Failed to fetch catalog'.$e->getMessage(),$e->getCode(),$e);
         }
-
     }
 
     /**
