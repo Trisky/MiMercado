@@ -10,10 +10,9 @@ const Main = props => (
     <Switch>
         <Route exact path='/' component={LoginModal}/>
         <Route exact path='/dashboard/:password' component={Dashboard}/>
+        <Route exact path='/admin/:username' component={AdminCatalogContainer}/>
         <Route exact path='/:username' component={CatalogContainer}/>
-        <Route exact path='/app/Catalog/:username' component={CatalogContainer}/>
         <Route exact path='/app/notfound' component={Notfound}/>
-        <Route exact path='/app/admin/:username' component={AdminCatalogContainer}/>
     </Switch>
 );
 export default Main;

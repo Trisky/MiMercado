@@ -2,6 +2,7 @@ import Catalog from "../Products/Catalog";
 import {InfoHeader} from "../Products/Header";
 import React from "react";
 import CatalogContainer from "../Products/CatalogContainer";
+import {AdminProduct} from "./AdminProduct";
 
 export default class AdminCatalogContainer extends CatalogContainer{
     renderCatalog(products) {
