@@ -8,7 +8,7 @@ export class AdminProduct extends Product {
         return (
             <div className={this.classType}>
                 <div className="card-header">
-                    Edit visiblity: <VisibilityToggle product={this.props.data} visible={true}/>
+                   <VisibilityToggle product={this.props.data} visible={true}/>
                 </div>
                 <ProductBody data={this.props.data}/>
             </div>
@@ -51,20 +51,23 @@ class VisibilityToggle extends Component {
     }
 
     showAction() {
+        this.setState({...this.state, loading: true});
         axios.post(`/api/products/visibility/show/${this.productId}`)
             .then(response => {
-                this.setState({...this.state, visible: true});
+                this.setState({...this.state, visible: true, loading: false});
             }).catch(this.showError)
     }
 
     hideAction() {
-        axios.post(`/api/products/visibility/show/${this.productId}`)
+        this.setState({...this.state, loading: true});
+        axios.post(`/api/products/visibility/hide/${this.productId}`)
             .then(response => {
-                this.setState({...this.state, visible: false});
+                this.setState({...this.state, visible: false, loading: false});
             }).catch(this.showError)
     }
 
-    showError(){
-        alert('Failed to change the visibility status');
+    showError() {
+        this.setState({...this.state, loading: false});
+        alert(`Failed to change the visibility status for the product ${this.productId}`);
     }
 }
