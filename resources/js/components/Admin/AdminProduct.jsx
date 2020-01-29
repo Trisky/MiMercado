@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Product, {ProductBody} from "../Products/Product";
 import {IoIosEye, IoIosEyeOff, IoIosRefreshCircle} from "react-icons/io";
+import axios from "axios";
 
 export class AdminProduct extends Product {
     render() {
@@ -50,12 +51,20 @@ class VisibilityToggle extends Component {
     }
 
     showAction() {
-        console.error('TODO show action', this.productId);
-        this.setState({...this.state, visible: true});
+        axios.post(`/api/products/visibility/show/${this.productId}`)
+            .then(response => {
+                this.setState({...this.state, visible: true});
+            }).catch(this.showError)
     }
 
     hideAction() {
-        console.error('TODO hide action', this.productId);
-        this.setState({...this.state, visible: false});
+        axios.post(`/api/products/visibility/show/${this.productId}`)
+            .then(response => {
+                this.setState({...this.state, visible: false});
+            }).catch(this.showError)
+    }
+
+    showError(){
+        alert('Failed to change the visibility status');
     }
 }

@@ -15,10 +15,13 @@ class Product extends Migration
     {
 
         Schema::create('products', function (Blueprint $table) {
-            $table->string('id')->index();
+            //$table->string('id')->index();
+            $table->increments('id')->index();
             $table->string('username');
             $table->string('product_id');
             $table->boolean('visible')->default(true);
+            $table->string('created_at');
+            $table->string('updated_at');
 
             $table->unique(['username', 'product_id']);
             $table->softDeletes();

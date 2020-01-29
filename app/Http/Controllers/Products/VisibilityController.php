@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
 
 class VisibilityController  extends Controller
 {
-    public function showProduct(Request $request){
-        $productId = $request->input('product_id');
+    public function show(Request $request){
+        $productId = $request->route('product_id');
         $product = $this->fetchProduct($productId);
         $product->show()->save();
 
     }
-    public function hideProduct(Request $request){
-        $productId = $request->input('product_id');
+    public function hide(Request $request){
+        $productId = $request->route('product_id');
         $product = $this->fetchProduct($productId);
         $product->hide()->save();
     }
@@ -27,7 +27,7 @@ class VisibilityController  extends Controller
        if(empty($product)){
            $product = new Product();
            $product->product_id = $productId;
-           $product->user = 'SEBA2321';//TODO
+           $product->username = 'SEBA2321';//TODO
        }
        return $product;
     }

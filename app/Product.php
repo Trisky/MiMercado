@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    protected $fillable = ['id','username','product_id','visible'];
     use SoftDeletes;
-    public $id;
-    public $user;
-    public $product_id;
-    public $visible = true;
+//    public $id;
+//    public $username;
+//    public $product_id;
+//    public $visible = true;
 
     public function hide(){
         $this->visible = false;
