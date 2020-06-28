@@ -8,18 +8,18 @@
         "php": "^7.3.11",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.4",
-        "laravel/framework": "^6.0",
+        "laravel/framework": "^7.0",
         "laravel/helpers": "^1.1",
-        "laravel/tinker": "^1.0",
+        "laravel/tinker": "^2.0",
         "mockery/mockery": "^1.2",
         "predis/predis": "^1.1"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
-        "laravel/ui": "^1.1",
-        "nunomaduro/collision": "^2.0",
-        "phpunit/phpunit": "8"
+        "laravel/ui": "^2.0",
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "classmap": [
@@ -52,6 +52,9 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
+        ],
+        "serve": [
+            "@php artisan serve"
         ]
     },
     "config": {

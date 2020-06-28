@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/products/{username}', 'ProductosController@apiProducts');
+Route::get('/admin/products/{username}', 'Admin\AdminProductsController@apiProducts');
+Route::post('/admin/visibility/show/{product_id}', 'Admin\VisibilityController@show');
+Route::post('/admin/visibility/hide/{product_id}', 'Admin\VisibilityController@hide');
+

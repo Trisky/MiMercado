@@ -42,10 +42,10 @@ class ProductsManager
      * Fetches the user products from the database if they are there
      * If they are not there it queues the job that fetches them and fails
      * @param string $username
-     * @return array
+     * @return Product[]
      * @throws CatalogNotReadyYet
      */
-    public function getUserProducts(string $username) {
+    public function getUserProducts(string $username,bool $onlyVisible = true) {
         $userCatalog = new CatalogStatus($username);
         try{
             (new Auth())->getAccessToken($username);
@@ -55,7 +55,7 @@ class ProductsManager
         $catalogStatus = $userCatalog->getCatalogStatus();
         switch ($catalogStatus){
             case $userCatalog::LOADED:
-                return $this->getProductsStorage()->fetchProductsFromDatabase($username);
+                return $this->getProductsStorage()->fetchProductsFromDatabase($username,$onlyVisible);
             case $userCatalog::NOTFOUND:
                 FetchCatalog::dispatch($username);
                 $userCatalog->setWaiting();

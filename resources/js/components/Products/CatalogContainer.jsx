@@ -3,7 +3,9 @@ import axios from 'axios';
 import Catalog from './Catalog';
 import {LoadingHeader,ErrorHeader,InfoHeader}  from './Header';
 import CopyToClipboardIcon from "../CopyToClipboardIcon";
+
 class CatalogContainer extends Component {
+    url = "/api/products"
 
     status = {
         success: 'success',
@@ -19,7 +21,8 @@ class CatalogContainer extends Component {
     loadProducts() {
         const { match: { params } } = this.props;
         let username = params.username;
-        axios.get(`/api/products/${username}`)
+
+         axios.get(`${this.url}/${username}`)
             .then(response => response.data)
             .then(response => {
                     this.setState({products: response.products, status: response.status})
@@ -43,10 +46,7 @@ class CatalogContainer extends Component {
             case this.status.success:
                 let products = this.state.products;
                 console.log({products});
-                return <div>
-                    <InfoHeader content={<HeaderContent/>}/>
-                    <Catalog products={products}/>
-                </div>;
+                return this.renderCatalog(products);
             case this.status.loading:
                 return <LoadingHeader content={'Loading'}/>;
             case this.status.notAvailable:
@@ -59,6 +59,13 @@ class CatalogContainer extends Component {
             default:
                 console.error(this.state.status + " is an unknown status");
         }
+    }
+
+    renderCatalog(products) {
+        return <div>
+            <InfoHeader content={<HeaderContent/>}/>
+            <Catalog products={products}/>
+        </div>;
     }
 
     queueReload() {

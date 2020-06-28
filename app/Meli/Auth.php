@@ -28,7 +28,7 @@ class Auth
         return $username;
     }
     public function saveAccessToken( $response,$username){
-        Redis::saveForUser($response,self::CACHE_KEY,$username);
+        Redis::saveForUser($response,self::CACHE_KEY,$username,Redis::ONE_MONTH);
     }
 
     /**

@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
@@ -27,6 +29,11 @@ Auth::routes();
 //React app
 
 Route::view('/app/catalog/{path?}', 'app');
+Route::view('/admin/{path?}', 'app');
 Route::view('app/{path?}', 'app');
 Route::view('/', 'app');
 Route::view('/{path?}', 'app');
+
+Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');

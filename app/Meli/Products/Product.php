@@ -19,6 +19,12 @@ class Product implements \JsonSerializable {
     private $id;
     private $description;
     private $price;
+    private $visible = true;
+
+
+    public function setVisible($visible){
+        $this->visible = (bool) $visible;
+    }
 
     /**
      * @return mixed
@@ -94,6 +100,10 @@ class Product implements \JsonSerializable {
         $this->pictures[] = $picture;
     }
 
+    public function getMeliId(){
+        return $this->getId();
+    }
+
     public function jsonSerialize() {
         return
             [
@@ -103,7 +113,12 @@ class Product implements \JsonSerializable {
                 'permalink' => $this->getPermaLink(),
                 'condition' => $this->getCondition(),
                 'description' => $this->getDescription(),
-                'pictures' => $this->getPictures()
+                'pictures' => $this->getPictures(),
+                'visible' => $this->isVisible()
             ];
+    }
+
+    public function isVisible() {
+        return $this->visible;
     }
 }
