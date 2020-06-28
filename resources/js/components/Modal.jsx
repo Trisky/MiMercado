@@ -31,12 +31,25 @@ const ButtonShort = props => {
     </div>
 };
 
+const DummyLogin  = () => {
+    return <div className={'col-md-12 text-right small '}>
+        <a className={'pull-right'} href={"/admin/dummy_user"}>
+            Click here for a test drive
+        </a>
+    </div>
+}
+
 export class LoginModal extends Modal {
     header = 'Login to Mercado Libre to list your products';
     body =
-        <Row body={
-            <ButtonShort body='Log in to Mercado Libre' href='/melilogin'/>
-        }/>
+        <div>
+            <Row body={
+                <ButtonShort body='Log in to Mercado Libre' href='/melilogin'/>
+            }/>
+            <Row body={
+                <DummyLogin/>
+            }/>
+        </div>
 }
 
 export class EmptyCatalog extends Modal {
