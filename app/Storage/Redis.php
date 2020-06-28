@@ -3,6 +3,7 @@
 
 namespace App\Storage;
 
+use App\Storage\Dummy\DummyCatalog;
 use Illuminate\Support\Facades\Redis as RedisClient;
 
 class Redis
@@ -17,6 +18,10 @@ class Redis
     }
 
     static public function getFromUser($key,$username){
+        if($username == DummyCatalog::DUMMY_USER){
+            $jsonString =  (new DummyCatalog())->get($key);
+            return json_decode($jsonString);
+        }
         $keyWithUsername = self::buildKey($key,$username);
         $accessData = RedisClient::get($keyWithUsername);
         return json_decode($accessData);
