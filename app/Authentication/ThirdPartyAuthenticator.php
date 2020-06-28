@@ -2,6 +2,7 @@
 
 
 namespace App\Authentication;
+use App\Storage\Dummy\DummyCatalog;
 use App\User;
 use Illuminate\Support\Facades\Auth as LaravelAuth;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,7 @@ class ThirdPartyAuthenticator
         if(LaravelAuth::check()){
             LaravelAuth::logout();
         }
-        $user = User::find('name',$username);
+        $user = User::where('name',$username)->first();
         if(!$user){
             $id = $this->registerAndGetId($username);
         }else{
@@ -24,11 +25,15 @@ class ThirdPartyAuthenticator
 
     }
 
+    public function authenticateAsDummyUser(){
+        $this->authenticate(DummyCatalog::DUMMY_USER);
+    }
+
     private function registerAndGetId(string $username) {
         $randomPass = str_random(12);
         $user = User::create([
             'name' => $username,
-            'email' => null,
+            'email' => 'dummy@test.com',
             'password' => Hash::make($randomPass),
         ]);
         return $user->id;

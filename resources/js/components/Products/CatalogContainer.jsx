@@ -5,6 +5,7 @@ import {LoadingHeader,ErrorHeader,InfoHeader}  from './Header';
 import CopyToClipboardIcon from "../CopyToClipboardIcon";
 
 class CatalogContainer extends Component {
+    url = "/api/products"
 
     status = {
         success: 'success',
@@ -20,7 +21,8 @@ class CatalogContainer extends Component {
     loadProducts() {
         const { match: { params } } = this.props;
         let username = params.username;
-         axios.get(`/api/products/${username}`)
+
+         axios.get(`${this.url}/${username}`)
             .then(response => response.data)
             .then(response => {
                     this.setState({products: response.products, status: response.status})

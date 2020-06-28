@@ -5,10 +5,11 @@ import axios from "axios";
 
 export class AdminProduct extends Product {
     render() {
+        console.log(this.props.data.visible);
         return (
             <div className={this.classType}>
                 <div className="card-header">
-                   <VisibilityToggle product={this.props.data} visible={true}/>
+                   <VisibilityToggle product={this.props.data}/>
                 </div>
                 <ProductBody data={this.props.data}/>
             </div>
@@ -30,7 +31,7 @@ class VisibilityToggle extends Component {
     }
 
     componentDidMount() {
-        this.setState({visible: this.props.visible, loading: this.state.loading});
+        this.setState({visible: this.props.product.visible, loading: this.state.loading});
     }
 
     render() {

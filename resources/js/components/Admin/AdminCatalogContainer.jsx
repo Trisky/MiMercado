@@ -5,6 +5,8 @@ import CatalogContainer from "../Products/CatalogContainer";
 import {AdminProduct} from "./AdminProduct";
 
 export default class AdminCatalogContainer extends CatalogContainer{
+    url = "/api/admin/products";
+
     renderCatalog(products) {
         return <div>
             <InfoHeader content={'Edit your catalog!'}/>
