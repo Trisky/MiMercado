@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/products/{username}', 'ProductosController@apiProducts');
-Route::post('/products/visibility/show/{product_id}', 'Products\VisibilityController@show');
-Route::post('/products/visibility/hide/{product_id}', 'Products\VisibilityController@hide');
+Route::post('/admin/visibility/show/{product_id}', 'Admin\VisibilityController@show');
+Route::post('/admin/visibility/hide/{product_id}', 'Admin\VisibilityController@hide');
 

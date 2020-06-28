@@ -52,7 +52,7 @@ class VisibilityToggle extends Component {
 
     showAction() {
         this.setState({...this.state, loading: true});
-        axios.post(`/api/products/visibility/show/${this.productId}`)
+        axios.post(`/api/admin/visibility/show/${this.productId}`)
             .then(response => {
                 this.setState({...this.state, visible: true, loading: false});
             }).catch(this.showError)
@@ -60,7 +60,7 @@ class VisibilityToggle extends Component {
 
     hideAction() {
         this.setState({...this.state, loading: true});
-        axios.post(`/api/products/visibility/hide/${this.productId}`)
+        axios.post(`/api/admin/visibility/hide/${this.productId}`)
             .then(response => {
                 this.setState({...this.state, visible: false, loading: false});
             }).catch(this.showError)
