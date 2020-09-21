@@ -1,5 +1,37 @@
 <?php
 
+$DATABASE_URL  = env("DATABASE_URL",null);
+if(!empty($DATABASE_URL)){
+    $DATABASE_URL = parse_url($DATABASE_URL);
+    /**
+     * we're using a connection string (most probably from heroku)
+     */
+   $DATABASE_PGSQL_CONFIG =  [
+        'driver' => 'pgsql',
+        'host' => $DATABASE_URL["host"],
+        'port' => $DATABASE_URL["port"],
+        'database' => ltrim($DATABASE_URL["path"], "/"),
+        'username' => $DATABASE_URL["user"],
+        'password' => $DATABASE_URL["pass"],
+        'charset' => 'utf8',
+        'prefix' => '',
+        'schema' => 'public',
+        'sslmode' => 'require',
+    ];
+}else{
+    $DATABASE_PGSQL_CONFIG = [
+        'driver' => 'pgsql',
+        'host' => env('DB_HOST', '127.0.0.1'),
+        'port' => env('DB_PORT', '5432'),
+        'database' => env('DB_DATABASE', 'forge'),
+        'username' => env('DB_USERNAME', ''),
+        'password' => env('DB_PASSWORD', ''),
+        'charset' => 'utf8',
+        'prefix' => '',
+        'schema' => 'public',
+        'sslmode' => 'prefer',
+    ];
+}
 return [
 
     /*
@@ -13,7 +45,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,18 +86,7 @@ return [
             'engine' => null,
         ],
 
-        'pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'schema' => 'public',
-            'sslmode' => 'prefer',
-        ],
+        'pgsql' => $DATABASE_PGSQL_CONFIG,
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
@@ -109,12 +130,13 @@ return [
         'client' => 'predis',
 
         'default' => [
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_PORT', 6379),
-            'database' => 0,
+            /**
+             * REDIS_URL is set by heroku
+             */
+            'url' => env('REDIS_URL', 'tcp://127.0.0.1:6379?database=0')
         ],
 
     ],
 
 ];
+
