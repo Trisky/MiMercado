@@ -31,9 +31,10 @@ class ThirdPartyAuthenticator
 
     private function registerAndGetId(string $username) {
         $randomPass = str_random(12);
+        $randomEmail = str_random(5);
         $user = User::create([
             'name' => $username,
-            'email' => 'dummy@test.com',
+            'email' => "noemail_$randomEmail@test.com",
             'password' => Hash::make($randomPass),
         ]);
         return $user->id;
