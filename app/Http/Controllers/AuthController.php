@@ -26,6 +26,7 @@ class AuthController extends Controller
         $authCode = $request->input('code');
         if(empty($authCode)){
             Log::info('No auth code received. Maybe the user said no to the app authorization in Mercado Libre?');
+            //TODO create a 'error logging into meli' page
             return redirect("/");
         }
         $username = (new Auth())->fetchAndStoreAccessToken($authCode);
