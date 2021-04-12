@@ -36,7 +36,7 @@ https://developers.mercadolibre.com/en_us/search-products-seller
 1. Go to http://localhost:8000
 2. Login to Mercado libre
 3. hide your products you dont want to show
-4. go to  http://mimercado.herokuapp.com/dummy_user (change the url for your user) and you'll get your sharing URL for your friends!
+4. go to  http://localhost:8000/dummy_user (change the url for your user) and you'll get your sharing URL for your friends!
 
 **Heroku Config**
 1. create an app in heroku
